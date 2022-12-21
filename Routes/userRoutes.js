@@ -1,7 +1,7 @@
 import express from 'express';
-import User from '../../Database/UserSchema.js';
+import User from '../Schemas/UserSchema.js';
 import Menu from '../Schemas/MenuSchema.js';
-import response from '../../services/response.js';
+import response from '../Utilities/response.js';
 
 const router = express.Router();
 
@@ -74,7 +74,7 @@ router.get('/getmenu/:id', async (req, res) => {
     const menu_id = req.params.id;
 
     try {
-        const menu = await Menu.findById(admin.menu_id);
+        const menu = await Menu.findById(menu_id);
 
         res.send(menu);
 

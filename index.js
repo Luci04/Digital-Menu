@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 
 import { AdminRouter } from "./Routes/adminRoutes.js";
+import { UserRouter } from "./Routes/userRoutes.js";
 
 //env Constants
 dotenv.config();
@@ -26,6 +27,8 @@ mongoose.connect(
 app.use(bodyParser.json());
 
 app.use('/admin', AdminRouter);
+app.use('/user', UserRouter);
+
 
 app.get('/', (req, res) => {
     res.send({ data: "Welcome to the Digital Menu Server" })
