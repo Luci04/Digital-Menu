@@ -16,7 +16,7 @@ If you have any questions or need help setting up the server, please don't hesit
 
 Our Flutter Application ->  https://play.google.com/store/apps/details?id=com.aa.menumate
 
-##There are several advantages to using a digital menu for restaurants and other food service establishments:
+## There are several advantages to using a digital menu for restaurants and other food service establishments:
 
 * Easy to update: Digital menus can be easily updated with the latest offerings and pricing, saving time and effort compared to updating traditional paper menus.
 
