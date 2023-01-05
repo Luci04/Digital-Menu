@@ -5,6 +5,8 @@ import bodyParser from "body-parser";
 
 import { AdminRouter } from "./Routes/adminRoutes.js";
 import { UserRouter } from "./Routes/userRoutes.js";
+import { Menurouter } from "./Routes/menuRoutes.js";
+import { OrderRouter } from "./Routes/orderRoutes.js";
 
 //env Constants
 dotenv.config();
@@ -28,6 +30,9 @@ app.use(bodyParser.json());
 
 app.use('/admin', AdminRouter);
 app.use('/user', UserRouter);
+app.use('/menu', Menurouter);
+app.use('/order', OrderRouter);
+
 
 
 app.get('/', (req, res) => {

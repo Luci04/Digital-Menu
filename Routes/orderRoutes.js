@@ -1,9 +1,9 @@
 import express from 'express';
 
-import Admin from '../Database/AdminSchema.js';
-import User from '../Database/UserSchema.js';
+import Admin from '../Schemas/AdminSchema.js';
+import User from '../Schemas/UserSchema.js';
 
-import Response from '../services/response.js';
+import Response from '../Utilities/response.js';
 
 const router = express.Router();
 
@@ -37,10 +37,7 @@ router.get('/getorder/user', async (req, res) => {
     const data = req.body;
 
     try {
-
-        const user = await User.findOne({ email_address: data.email_address })
-            .select('order_history')
-            .slice('order_history', -10)
+        const user = await User.findOne({ email_address: data.email_address }, { order_history: true })
 
         res.send(user);
     } catch (error) {
@@ -48,6 +45,8 @@ router.get('/getorder/user', async (req, res) => {
     }
 });
 
+
+//Retrive All Order for User
 router.get('/getorders/admin', async (req, res) => {
 
     try {

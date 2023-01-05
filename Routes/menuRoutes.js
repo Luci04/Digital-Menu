@@ -1,13 +1,13 @@
 import express from 'express';
 
-import Response from '../services/response.js';
+import Response from '../Utilities/response.js';
 
 const Menurouter = express.Router();
 
 //Database Schemas
-import { Menu } from '../Database/MenuSchema.js';
-import { MenuItem } from '../Database/MenuItemSchema.js';
-import { Cousine } from '../Database/CousineSchema.js';
+import Menu from '../Schemas/MenuSchema.js';
+import { MenuItem } from '../Schemas/MenuItemSchema.js';
+import { Cousine } from '../Schemas/CousineSchema.js';
 
 
 const FetchCousings = (cousine) => {
@@ -82,20 +82,22 @@ Menurouter.post("/saveData", async (req, res) => {
 });
 
 
-//Get Menu of Id "637a614ea63a90f5a043f7ba"
-Menurouter.get("/getMenu", async (req, res) => {
-    try {
-        const data = await Menu.findById("637a614ea63a90f5a043f7ba")
+Menurouter.get("/get_menu/:id", async (req, res) => {
 
-        if (!data) {
-            throw Error;
+    const menu_id = req.params.id;
+
+    try {
+        const menu = await Menu.findById(menu_id)
+
+        if (!menu) {
+            throw Error("Menu not found");
         }
 
-        res.send(data);
+        res.send(menu);
 
     }
     catch (error) {
-        res.status(Response.does_not_exist.code).send(Response.does_not_exist)
+        res.status(Response.does_not_exist.code).send(error.message)
     }
 });
 
