@@ -1,6 +1,4 @@
 import { model, Schema } from "mongoose";
-import { OrderSchema } from "./OrderSchema.js";
-
 
 const UserSchema = new Schema({
     first_name: {
@@ -20,13 +18,10 @@ const UserSchema = new Schema({
         type: "String",
         required: true,
     },
-    order_history: [OrderSchema],
-    loaction: {
-        type: "String",
-    },
+    order_history: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
     menu_id: {
         type: Schema.Types.ObjectId,
-        ref: 'MenuSchema'
+        ref: 'Menu'
     }
 });
 

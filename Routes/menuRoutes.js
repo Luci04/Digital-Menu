@@ -50,6 +50,8 @@ Menurouter.post("/saveData", async (req, res) => {
     try {
         const data = req.body.hotel_menu;
 
+        console.log(data);
+
         const Cousinglist = [];
 
         for (let index = 0; index < data.length; index++) {

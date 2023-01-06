@@ -18,11 +18,11 @@ const ItemSchema = new Schema({
 const OrderSchema = new Schema({
     user_id: {
         type: Schema.Types.ObjectId,
-        ref: "UserSchema"
+        ref: "User"
     },
     hotel_id: {
         type: Schema.Types.ObjectId,
-        ref: "AdminSchema"
+        ref: "Admin"
     },
     ordered_items: [ItemSchema],
     table_number: {

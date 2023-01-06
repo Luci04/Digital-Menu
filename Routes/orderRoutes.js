@@ -2,6 +2,7 @@ import express from 'express';
 
 import Admin from '../Schemas/AdminSchema.js';
 import User from '../Schemas/UserSchema.js';
+import { Order } from '../Schemas/OrderSchema.js';
 
 import Response from '../Utilities/response.js';
 
@@ -12,34 +13,43 @@ router.post('/place_order', async (req, res) => {
 
     const data = req.body;
 
+
+    console.log(data);
+
     try {
+        const order = new Order({
+            ...data.order
+        })
+
+        order.save();
+
         const user = await User.findByIdAndUpdate({ _id: data.user_id }, {
             $push: {
-                order_history: data.order
+                order_history: order._id
             }
         });
 
         const admin = await Admin.findByIdAndUpdate({ _id: data.order.hotel_id }, {
             $push: {
-                order_history: data.order
+                order_history: order._id
             }
         });
 
+        res.send({ order });
 
-        res.send({ user });
     } catch (error) {
         res.status(Response.does_not_exist.code).send(Response.does_not_exist)
     }
 });
 
 //Retrive All Order for User
-router.get('/getorder/user', async (req, res) => {
+router.get('/user/getorder', async (req, res) => {
     const data = req.body;
 
     try {
-        const user = await User.findOne({ email_address: data.email_address }, { order_history: true })
+        const AllOrders = await User.findOne({ email_address: data.email_address }, { order_history: true }).populate('order_history')
 
-        res.send(user);
+        res.send(AllOrders);
     } catch (error) {
         res.status(Response.does_not_exist.code).send(Response.does_not_exist)
     }
@@ -47,19 +57,19 @@ router.get('/getorder/user', async (req, res) => {
 
 
 //Retrive All Order for User
-router.get('/getorders/admin', async (req, res) => {
+// router.get('/getorders/admin', async (req, res) => {
 
-    try {
-        // const data = await Menu.find({}, { _id: 1 });
+//     try {
+//         // const data = await Menu.find({}, { _id: 1 });
 
-        if (data === undefined || data === null || data.length === 0) {
-            throw Error();
-        }
+//         if (data === undefined || data === null || data.length === 0) {
+//             throw Error();
+//         }
 
-        res.send(data);
-    } catch (error) {
-        res.status(Response.does_not_exist.code).send(Response.does_not_exist)
-    }
-});
+//         res.send(data);
+//     } catch (error) {
+//         res.status(Response.does_not_exist.code).send(Response.does_not_exist)
+//     }
+// });
 
 export { router as OrderRouter };

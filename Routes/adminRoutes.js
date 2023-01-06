@@ -72,18 +72,14 @@ router.post('/set_menu', async (req, res) => {
     const admin_email = req.body.admin_email;
     const data = req.body.hotel_menu;
 
-    let admin = undefined
+    let admin = undefined;
 
     try {
         admin = await Admin.findOne({
             email_address: admin_email
         })
-
-        if (!admin) {
-            throw new Error("Admin not found")
-        }
     } catch (error) {
-        res.status(404).send({ Avinash: "Avinash" })
+        res.status(response.does_not_exist.code).send(response.does_not_exist.message);
     }
 
     const CousingList = [];
@@ -95,14 +91,14 @@ router.post('/set_menu', async (req, res) => {
 
         const currCousine = {
             title: element.title,
-            menuItemList: AllCousine,
+            menu_item_list: AllCousine,
         };
 
         CousingList.push(currCousine);
     }
 
     const currMenu = new Menu({
-        CousineList: CousingList,
+        cousine_list: CousingList,
     });
 
     currMenu.save((err, currMenu) => {

@@ -1,11 +1,12 @@
-import mongoose, { model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import { MenuItemSchema } from "./MenuItemSchema.js";
 
 export const CousineSchema = new Schema({
   title: {
+    required: true,
     type: "String",
   },
-  menuItemList: [MenuItemSchema],
+  menu_item_list: [MenuItemSchema],
 });
 
-export const Cousine = mongoose.model("Cousine", CousineSchema);
+export const Cousine = model("Cousine", CousineSchema);

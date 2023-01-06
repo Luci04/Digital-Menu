@@ -24,14 +24,14 @@ const AdminSchema = new Schema({
         type: "String",
         required: true,
     },
-    loaction: {
+    location: {
         type: "String",
     },
     menu_id: {
         type: Schema.Types.ObjectId,
-        ref: "MenuSchema"
+        ref: "Menu"
     },
-    order_history: [OrderSchema]
+    order_history: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
 });
 
 const Admin = model("Admin", AdminSchema);
