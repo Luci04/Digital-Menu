@@ -89,7 +89,13 @@ Menurouter.get("/get_menu/:id", async (req, res) => {
     const menu_id = req.params.id;
 
     try {
-        const menu = await Menu.findById(menu_id)
+        let menu = await Menu.findById(menu_id)
+
+        menu.id = menu._id;
+
+        delete menu._id;
+
+        console.log(menu);
 
         if (!menu) {
             throw Error("Menu not found");
