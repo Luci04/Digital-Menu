@@ -6,6 +6,7 @@ const Menurouter = express.Router();
 
 //Database Schemas
 import Menu from '../Schemas/MenuSchema.js';
+import Admin from '../Schemas/AdminSchema.js';
 import { MenuItem } from '../Schemas/MenuItemSchema.js';
 import { Cousine } from '../Schemas/CousineSchema.js';
 
@@ -86,22 +87,23 @@ Menurouter.post("/saveData", async (req, res) => {
 
 Menurouter.get("/get_menu/:id", async (req, res) => {
 
-    const menu_id = req.params.id;
+    const menuId = req.params.id;
 
     try {
-        let menu = await Menu.findById(menu_id)
-
-        menu.id = menu._id;
-
-        delete menu._id;
-
-        console.log(menu);
+        const menu = await Menu.findById(menuId)
 
         if (!menu) {
             throw Error("Menu not found");
         }
 
-        res.send(menu);
+        const admin = await Admin.findOne({ menu_id: menuId }, { hotel_name: true })
+
+        if (!admin) {
+            throw Error("Hotel Details not found");
+        }
+
+
+        res.send({ menu: menu, hotel_details: admin });
 
     }
     catch (error) {

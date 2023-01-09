@@ -32,6 +32,15 @@ const AdminSchema = new Schema({
         ref: "Menu"
     },
     order_history: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
+}, {
+    versionKey: false,
+    id: true,
+    toJSON: {
+        transform(doc, ret) {
+            ret.id = ret._id
+            delete ret._id
+        }
+    }
 });
 
 const Admin = model("Admin", AdminSchema);
