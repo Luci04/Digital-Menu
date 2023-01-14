@@ -102,8 +102,26 @@ Menurouter.get("/get_menu/:id", async (req, res) => {
             throw Error("Hotel Details not found");
         }
 
+        const popular = [];
+        const special = [];
 
-        res.send({ menu: menu, hotel_details: admin });
+        menu.cousine_list.forEach(dish => {
+            dish.menu_item_list.forEach(item => {
+                if (item.popular) {
+                    popular.push(item)
+                }
+
+                if (item.special) {
+                    special.push(item);
+                }
+            })
+        });
+
+
+        res.send({
+            menu: menu,
+            hotel_details: admin, popular: popular, special: special
+        });
 
     }
     catch (error) {
