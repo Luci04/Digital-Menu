@@ -44,11 +44,12 @@ router.post('/place_order', async (req, res) => {
 });
 
 //Retrive All Order for User
-router.get('/user/getorder', async (req, res) => {
-    const data = req.body;
+router.get('/user/getorder/:id', async (req, res) => {
+    const id = req.params.id;;
+
 
     try {
-        const AllOrders = await User.findOne({ email_address: data.email_address }, { order_history: true }).populate('order_history')
+        const AllOrders = await User.findOne({ _id: id }, { order_history: true }).populate('order_history')
 
         res.send(AllOrders);
     } catch (error) {
