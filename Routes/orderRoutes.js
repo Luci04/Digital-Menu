@@ -11,14 +11,13 @@ const router = express.Router();
 //Placing Order
 router.post('/place_order', async (req, res) => {
 
-    const data = req.body;
-
+    const data = req.body.order;
 
     console.log(data);
 
     try {
         const order = new Order({
-            ...data.order
+            ...data
         })
 
         order.save();
@@ -29,7 +28,9 @@ router.post('/place_order', async (req, res) => {
             }
         });
 
-        const admin = await Admin.findByIdAndUpdate({ _id: data.order.hotel_id }, {
+        console.log(user);
+
+        const admin = await Admin.findByIdAndUpdate({ _id: data.hotel_id }, {
             $push: {
                 order_history: order._id
             }
