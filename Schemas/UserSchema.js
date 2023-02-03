@@ -23,6 +23,15 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Menu'
     }
+}, {
+    versionKey: false,
+    id: true,
+    toJSON: {
+        transform(doc, ret) {
+            ret.id = ret._id
+            delete ret._id
+        }
+    }
 });
 
 const User = model("User", UserSchema);

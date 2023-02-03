@@ -7,6 +7,15 @@ export const CousineSchema = new Schema({
     type: "String",
   },
   menu_item_list: [MenuItemSchema],
+}, {
+  versionKey: false,
+  id: true,
+  toJSON: {
+    transform(doc, ret) {
+      ret.id = ret._id
+      delete ret._id
+    }
+  }
 });
 
 export const Cousine = model("Cousine", CousineSchema);

@@ -26,6 +26,15 @@ export const MenuItemSchema = new Schema({
     required: true,
     type: "Number",
   },
+}, {
+  versionKey: false,
+  id: true,
+  toJSON: {
+    transform(doc, ret) {
+      ret.id = ret._id
+      delete ret._id
+    }
+  }
 });
 
 export const MenuItem = model("MenuItem", MenuItemSchema);

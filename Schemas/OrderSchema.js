@@ -13,6 +13,15 @@ const ItemSchema = new Schema({
         type: "Number",
         required: true
     }
+}, {
+    versionKey: false,
+    id: true,
+    toJSON: {
+        transform(doc, ret) {
+            ret.id = ret._id
+            delete ret._id
+        }
+    }
 })
 
 const OrderSchema = new Schema({
@@ -37,7 +46,17 @@ const OrderSchema = new Schema({
         type: "String",
         default: "Pending"
     }
-}, { timestamps: true })
+}, {
+    versionKey: false,
+    timestamps: true,
+    id: true,
+    toJSON: {
+        transform(doc, ret) {
+            ret.id = ret._id
+            delete ret._id
+        }
+    }
+})
 
 
 const Order = model('Order', OrderSchema)
